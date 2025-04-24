@@ -1,7 +1,7 @@
 provider "google" {
   project     = "wideops-support-393412"
   region      = "europe-west1"
-  credentials = file("/home/boris_k/CA-test/wideops-support-tf-test.json")
+  credentials = file("/path/to/the/json-key-file") # You need to have a key file which will authorize terraform to create resources 
 }
 
 resource "google_compute_network" "custom_vpc" {
@@ -113,7 +113,6 @@ resource "google_compute_target_http_proxy" "http_proxy" {
 resource "google_compute_global_forwarding_rule" "lb_forwarding_rule" {
   name       = "web-forwarding-rule"
   target     = google_compute_target_http_proxy.http_proxy.self_link
-  ip_address = "34.111.196.142"  # Replace this with the actual IP address that you have reserved 
+  ip_address = "x.x.x.x"  # Replace this with the actual external IP address that you have reserved from step A) 
   port_range = "80"
-  # You can remove the depends_on for the google_compute_address resource
 }
