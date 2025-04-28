@@ -1,7 +1,7 @@
 provider "google" {
-  project     = "wideops-support-393412"
+  project     = "wideops-support-393412" # Here you specify your project ID
   region      = "europe-west1"
-  credentials = file("/path/to/the/json-key-file") # You need to have a key file which will authorize terraform to create resources 
+  credentials = file("/path/to/the/json-key-file") # Spesify the location of the .json key file for the service account
 }
 
 resource "google_compute_network" "custom_vpc" {
@@ -51,7 +51,7 @@ resource "google_compute_instance" "web_test_vm" {
     #!/bin/bash
     sudo apt update -y
     sudo apt install apache2 -y
-    echo "This is Boris' web server!" > /var/www/html/index.html
+    echo "This is my test web server!" > /var/www/html/index.html
     mkdir -p /var/www/html/.secret
     echo "Secret File!" > /var/www/html/.secret/file1.txt
     EOT
@@ -113,6 +113,6 @@ resource "google_compute_target_http_proxy" "http_proxy" {
 resource "google_compute_global_forwarding_rule" "lb_forwarding_rule" {
   name       = "web-forwarding-rule"
   target     = google_compute_target_http_proxy.http_proxy.self_link
-  ip_address = "x.x.x.x"  # Replace this with the actual external IP address that you have reserved from step A) 
+  ip_address = "x.x.x.x"  # Replace this with the actual external IP address that you have reserved 
   port_range = "80"
 }
